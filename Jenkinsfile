@@ -1,5 +1,5 @@
 pipeline{
-    agent any
+    agent 'master'
     stages{
         stage('Deploy Patient App') {
         steps {
