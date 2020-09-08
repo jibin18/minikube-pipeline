@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label 'master'
+        label 'local'
     }
     stages{
         stage('Deploy Patient App') {
