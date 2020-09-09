@@ -15,7 +15,7 @@ pipeline{
                 withCredentials([
                 string(credentialsId: 'minikube', variable: 'api_token')
                 ]) {
-                    sh 'kubectl --token $api_token --server https://192.168.99.100:8443 --insecure-skip-tls-verify=true delete deploy httpd-deploy -n am-dev'
+                    sh 'kubectl --token $api_token --server https://192.168.99.100:8443 --insecure-skip-tls-verify=true delete deploy httpd-deploy -n' ${params.ENVIRONMENT}
                 }
             }
         }
