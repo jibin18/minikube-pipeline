@@ -11,6 +11,7 @@ pipeline{
     stages{
         stage('Cleanup'){
             steps{
+                echo "******Deployment To ******* ${params.ENVIRONMENT}"
                 withCredentials([
                 string(credentialsId: 'minikube', variable: 'api_token')
                 ]) {
