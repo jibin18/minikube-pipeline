@@ -2,8 +2,24 @@ pipeline{
     agent{
         label 'local'
     }
+    parameters {
+       choice(name: 'ENVIRONMENT', choices: ['am-dev','am-int'], description: 'Select the Environment to Deploy configstore,amster,openam. Default am-dev')
+    }
+    options{
+        timeout(time: 20, unit: 'MINUTES')
+    }
     stages{
-        stage('Deploy Patient App') {
+        stage('Cleanup'){
+            steps{
+                withCredentials([
+                string(credentialsId: 'minikube', variable: 'api_token')
+                ]) {
+                    sh 'kubectl --token $api_token --server https://192.168.99.100:8443 --insecure-skip-tls-verify=true delete deploy httpd-deploy -n am-dev'
+                }
+            }
+            }
+        }
+        stage('Deploy httpd') {
         steps {
             withCredentials([
                 string(credentialsId: 'minikube', variable: 'api_token')
