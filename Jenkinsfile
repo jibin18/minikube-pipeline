@@ -19,7 +19,7 @@ pipeline{
                     sh "kubectl --token $api_token --insecure-skip-tls-verify=true delete deploy httpd-deploy -n ${params.ENVIRONMENT}"
                 }
             }
-        //}
+        }
         stage('Deploy httpd') {
         steps {
             withCredentials([
