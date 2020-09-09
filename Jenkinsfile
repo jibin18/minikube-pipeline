@@ -3,7 +3,7 @@ pipeline{
         label 'local'
     }
     parameters {
-       choice(name: 'ENVIRONMENT', choices: ['am-dev','am-int'], description: 'Select the Environment to Deploy configstore,amster,openam. Default am-dev')
+       choice(name: 'ENVIRONMENT', choices: ['am-dev','default'], description: 'Select the Environment to Deploy configstore,amster,openam. Default am-dev')
     }
     options{
         timeout(time: 20, unit: 'MINUTES')
@@ -25,7 +25,8 @@ pipeline{
             withCredentials([
                 string(credentialsId: 'minikube', variable: 'api_token')
                 ]) {
-                    sh "kubectl --token $api_token --server https://192.168.99.100:8443 --insecure-skip-tls-verify=true apply -f httpd.yaml"
+                    //sh "kubectl --token $api_token --server https://192.168.99.100:8443 --insecure-skip-tls-verify=true apply -f httpd.yaml"
+                    sh "kubectl --token $api_token --insecure-skip-tls-verify=true apply -f httpd.yaml -n ${params.ENVIRONMENT}"
                 }
             }
         }
