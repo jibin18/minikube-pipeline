@@ -22,7 +22,7 @@ pipeline{
                         
                         if(configmap=="PASS")
                         {
-                        echo 'test passed !!! '
+                            echo 'test passed !!! '
                         
                        
                         }
@@ -41,7 +41,7 @@ pipeline{
                     }
                 }
             }
-        //}
+        }
         //stage('Cleanup'){
         //    steps{
         //        echo "******Deployment To ******* ${params.ENVIRONMENT}"
