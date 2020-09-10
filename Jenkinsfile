@@ -17,20 +17,19 @@ pipeline{
                         //sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         
                     configmap = sh (
-                        script: "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}",returnStdout: true).trim()
-                        
-                    echo "configmap: ${configmap}"
+                        script: "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}",returnStdout: true).trim()                       
+                        echo "configmap: ${configmap}"
 
                         //GIT_COMMIT_EMAIL = sh (
                         //    script: 'git --no-pager show -s --format=\'%ae\'',returnStdout: true).trim()
                         //    echo "Git committer email: ${GIT_COMMIT_EMAIL}"
-                        //if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
-                        //    def configMapNames = configMap.split('\n')
-                        //    for (int i=0; i <  configMapNames.length; i++){
-                        //    def command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"        
-                            
-                        //    }
-                        //}
+                        if(!${configmap}.allWhitespace && !${configmap}.equals("No resources found.")){
+                            //configMapNames = configMap.split('\n')
+                            //for (int i=0; i <  configMapNames.length; i++){
+                            //command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"                                    
+                            println "configmap httpd-cm Listed"
+                            }
+                        }
                         //else{
                         //println "No configmap httpd-cm Listed"
                         //}
