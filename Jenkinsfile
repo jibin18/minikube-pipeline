@@ -16,13 +16,6 @@ pipeline{
                         //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         //sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         
-                        def cmd = 'hostname'
-                        def sout = new StringBuffer(), serr = new StringBuffer()
-                        def proc = cmd.execute()
-                        proc.consumeProcessOutput(sout, serr)
-                        proc.waitForOrKill(1000)
-                        println sout
-
                         String configmap = sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         println configmap
                         //if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
