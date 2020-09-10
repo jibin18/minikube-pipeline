@@ -38,6 +38,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: httpd-cm
+  labels:
+    app: httpd-app
+    component: httpd
 data:
   dbname: mysql
   log_level: debug
