@@ -11,6 +11,7 @@ pipeline{
     stages{
         stage('List configmap'){
             steps{
+                script{
                 withCredentials([string(credentialsId: 'minikube', variable: 'api_token')]){
                     getConfigMap="kubectl get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                     configMap = getConfigMap.execute.text
@@ -23,6 +24,7 @@ pipeline{
                     }else{
                     println "No configmap httpd-cm Listed"
                     }
+                }
                 }
             }
         }
