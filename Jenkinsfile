@@ -12,19 +12,20 @@ pipeline{
         stage('List configmap'){
             steps{
                 script{
-                withCredentials([string(credentialsId: 'minikube', variable: 'api_token')]){
-                    getConfigMap="kubectl get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
-                    configMap = getConfigMap.execute.text
-                    if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
-                        //def configMapNames = configMap.split('\n')
-                        //for (int i=0; i <  configMapNames.length; i++){
-                        command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"        
-                        println command.execute().text
-                        //}
-                    }else{
-                    println "No configmap httpd-cm Listed"
+                    withCredentials([string(credentialsId: 'minikube', variable: 'api_token')]){
+                        def getConfigMap="kubectl get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
+                        def configMap = getConfigMap.execute.text
+                        if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
+                            //def configMapNames = configMap.split('\n')
+                            //for (int i=0; i <  configMapNames.length; i++){
+                            def command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"        
+                            println command.execute().text
+                            //}
+                        }
+                        else{
+                        println "No configmap httpd-cm Listed"
+                        }
                     }
-                }
                 }
             }
         }
