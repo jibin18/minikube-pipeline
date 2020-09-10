@@ -15,21 +15,19 @@ pipeline{
                     withCredentials([string(credentialsId: 'minikube', variable: 'api_token')]){
                         //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
-                        configmap =
-                        '''
-                        kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}
-                        '''
-                        println configmap
-                        if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
-                            def configMapNames = configMap.split('\n')
-                            for (int i=0; i <  configMapNames.length; i++){
-                            def command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"        
+                        def configmap = "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}".execute()
+                
+                        //println configmap
+                        //if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
+                        //    def configMapNames = configMap.split('\n')
+                        //    for (int i=0; i <  configMapNames.length; i++){
+                        //    def command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"        
                             
-                            }
-                        }
-                        else{
-                        println "No configmap httpd-cm Listed"
-                        }
+                        //    }
+                        //}
+                        //else{
+                        //println "No configmap httpd-cm Listed"
+                        //}
                     }
                 }
             }
