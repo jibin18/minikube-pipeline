@@ -19,7 +19,7 @@ pipeline{
                     configmap = sh (
                         script: "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}",returnStdout: true).trim()
                         
-                    println "configmap" configmap
+                    echo "configmap: ${configmap}"
 
                         //GIT_COMMIT_EMAIL = sh (
                         //    script: 'git --no-pager show -s --format=\'%ae\'',returnStdout: true).trim()
