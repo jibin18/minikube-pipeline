@@ -24,10 +24,9 @@ pipeline{
                         {
                             echo 'test passed !!! '
                             sh "kubectl delete configmap/httpd-cm --force -n ${params.ENVIRONMENT}"                                                         
-                        }
-                        
-
-                       
+                        }else{
+                            echo 'next step'
+                        }                    
                         //    command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"                                    
                     }
                 }
