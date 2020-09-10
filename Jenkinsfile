@@ -16,7 +16,7 @@ pipeline{
                         //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         //sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         
-                    configmap = sh (
+                        configmap = sh (
                         script: "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}",returnStdout: true).trim()                       
                         echo "configmap: ${configmap}"
 
@@ -36,7 +36,7 @@ pipeline{
                     }
                 }
             }
-        }
+        //}
         //stage('Cleanup'){
         //    steps{
         //        echo "******Deployment To ******* ${params.ENVIRONMENT}"
