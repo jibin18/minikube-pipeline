@@ -15,7 +15,7 @@ pipeline{
                     withCredentials([string(credentialsId: 'minikube', variable: 'api_token')]){
                         //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
-                        sh "outputPods=($(kubectl get pods -o=name -n $namespace))"
+                        sh "outputPods="($(kubectl get pods -o=name -n $namespace))""
                         echo "outputPods"
                         //configMap = ($(kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}))
                         if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
