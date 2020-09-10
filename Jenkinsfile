@@ -14,20 +14,22 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'minikube', variable: 'api_token')]){
                         //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
-                        sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
-                        sh "outputPods="($(kubectl get pods -o=name -n $namespace))""
-                        echo "outputPods"
-                        //configMap = ($(kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}))
+                        sh '''
+                        getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
+                        
+                        echo $getConfigMap
+                        configMap = ($(kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}))
                         if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
-                            //def configMapNames = configMap.split('\n')
-                            //for (int i=0; i <  configMapNames.length; i++){
+                            def configMapNames = configMap.split('\n')
+                            for (int i=0; i <  configMapNames.length; i++){
                             def command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"        
-                            //println command.execute().text
-                            //}
+                            
+                            }
                         }
                         else{
                         println "No configmap httpd-cm Listed"
                         }
+                        '''
                     }
                 }
             }
