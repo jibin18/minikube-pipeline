@@ -17,11 +17,11 @@ pipeline{
                         sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         try{
                         def configmap = "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}".execute()
-                        }catch(e) {
-                        if (e instanceof RejectedAccessException) {
-                            throw e
+                        }catch(RejectedAccessException e) {
+                            throw e	
+                        } catch(e) {
+                            echo 'There was an error'
                         }
-                    }
                         //println configmap
                         //if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
                         //    def configMapNames = configMap.split('\n')
