@@ -16,12 +16,14 @@ pipeline{
                         //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         //sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         
-                        String configmap = sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
-                        println configmap
+                    configmap = sh (
+                        script: "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}",returnStdout: true).trim()
+                        
+                    println configmap
 
-                        GIT_COMMIT_EMAIL = sh (
-                            script: 'git --no-pager show -s --format=\'%ae\'',returnStdout: true).trim()
-                        echo "Git committer email: ${GIT_COMMIT_EMAIL}"
+                        //GIT_COMMIT_EMAIL = sh (
+                        //    script: 'git --no-pager show -s --format=\'%ae\'',returnStdout: true).trim()
+                        //    echo "Git committer email: ${GIT_COMMIT_EMAIL}"
                         //if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
                         //    def configMapNames = configMap.split('\n')
                         //    for (int i=0; i <  configMapNames.length; i++){
