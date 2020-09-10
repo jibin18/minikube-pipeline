@@ -17,7 +17,7 @@ pipeline{
                         sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         configmap =
                         '''
-                        sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
+                        kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}
                         '''
                         println configmap
                         if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
