@@ -13,13 +13,14 @@ pipeline{
             steps{
                 script{
                     withCredentials([string(credentialsId: 'minikube', variable: 'api_token')]){
-                        def getConfigMap="kubectl get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
-                        def configMap = getConfigMap.execute.text
+                        //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
+                        //sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
+                        configMap = ($(sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"))
                         if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
                             //def configMapNames = configMap.split('\n')
                             //for (int i=0; i <  configMapNames.length; i++){
                             def command  = "kubectl delete configmap "+""+configMapNames[i].replace( 'configmap/', '' ).trim()+""+" -n "+${params.ENVIRONMENT}+" --grace-period=0 --force"        
-                            println command.execute().text
+                            //println command.execute().text
                             //}
                         }
                         else{
