@@ -16,7 +16,7 @@ pipeline{
                         //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         //sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         
-                        String configmap = sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
+                        String configmap = (sh "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}")
                         println configmap
                         //if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
                         //    def configMapNames = configMap.split('\n')
