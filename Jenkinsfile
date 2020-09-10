@@ -19,8 +19,14 @@ pipeline{
                         configmap = sh (
                         script: "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}",returnStdout: true).trim()                       
                         echo "configmap: ${configmap}"
-                        cfCount = sh( script: "${configmap[@]}")
-                        echo "count: ${cfCount}"
+                        
+                        if(configmap=="PASS")
+                        {
+                        echo 'test passed !!! '
+                        
+                       
+                        }
+                        
 
                         //if(!${configmap}.allWhitespace && !${configmap}.equals("No resources found.")){
                         //    configMapNames = configMap.split('\n')
