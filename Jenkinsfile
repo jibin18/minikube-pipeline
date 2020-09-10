@@ -20,7 +20,7 @@ pipeline{
                         script: "kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}",returnStdout: true).trim()                       
                         echo "configmap: ${configmap}"
                         
-                        if(configmap=="PASS")
+                        if(configmap=="configmap/httpd-cm")
                         {
                             echo 'test passed !!! '
                         
