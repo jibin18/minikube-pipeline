@@ -15,9 +15,9 @@ pipeline{
                     withCredentials([string(credentialsId: 'minikube', variable: 'api_token')]){
                         //getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
                         sh '''
-                        getConfigMap="kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}"
+                        kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}
                         
-                        echo $getConfigMap
+                        
                         configMap = ($(kubectl --token $api_token --insecure-skip-tls-verify=true get configmap/httpd-cm -o=name -n ${params.ENVIRONMENT}))
                         if(!configMap.allWhitespace && !configMap.equals("No resources found.")){
                             def configMapNames = configMap.split('\n')
