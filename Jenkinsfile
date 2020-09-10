@@ -23,7 +23,7 @@ pipeline{
                         if(configMapName=="configmap/httpd-cm")
                         {
                             echo 'test passed !!! '
-                            sh "kubectl delete configmap/httpd-cm --force -n ${params.ENVIRONMENT}+"                                                         
+                            sh "kubectl delete configmap/httpd-cm --force -n ${params.ENVIRONMENT}"                                                         
                         }
                         
 
